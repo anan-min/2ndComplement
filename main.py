@@ -1,38 +1,41 @@
 
 
-def twos_complement_to_integer(binary_string, n_bits):
+def twos_complement_to_integer(binary_string, n_bytes):
     # check invalid value 
     # check for the first digit 
     # if negative
     # else positive (normal convertation)
     # return integer 
 
-    if not is_input_valid(binary_string, n_bits):
+    if not is_input_valid(binary_string, n_bytes):
         raise ValueError("Error: Binary string must be 8 bits long for 1 byte.")
     
     first_digit = binary_string[0]
     result = 0
     if first_digit == "1":
-        # negative number 
+        # negative number ``
         binary_string = complement(binary_string)
-        result = int(binary_string, 2) - 2**n_bits
+        result = int(binary_string, 2) - 2**(n_bytes * 8)
     else:
         # positive number
         result = int(binary_string, 2) 
 
     return result 
 
-def unsigned_to_integer(unsigned_string, n_bits):
+def unsigned_to_integer(unsigned_string, n_bytes):
 
-    if not is_input_valid(unsigned_string, n_bits):
+    if not is_input_valid(unsigned_string, n_bytes):
         raise ValueError("Error: Binary string must be 8 bits long for 1 byte.")
     
     return int(unsigned_string, 2)
 
 
 
-def is_input_valid(binary_string, n_bits):
-    if len(binary_string) != n_bits:
+def is_input_valid(binary_string, n_bytes):
+    # what are all the possible size
+    if n_bytes not in [1, 2, 4]:
+        return False
+    elif len(binary_string) != n_bytes * 8:
         return False
     else:
         return True
@@ -61,12 +64,12 @@ def test_binary():
     negative_string = [str6, str7, str8, str9, str10]
 
     for str in positive_string:
-        print(f"\ninput: {str} 2nd output: {twos_complement_to_integer(str, 8)}")
-        print(f"input: {str} unsigned output: {unsigned_to_integer(str, 8)}")
+        print(f"\ninput: {str} 2nd output: {twos_complement_to_integer(str, 1)}")
+        print(f"input: {str} unsigned output: {unsigned_to_integer(str, 1)}")
 
     for str in negative_string:
-        print(f"\ninput: {str} 2nd output: {twos_complement_to_integer(str, 8)}")
-        print(f"input: {str} unsigned output: {unsigned_to_integer(str, 8)}")
+        print(f"\ninput: {str} 2nd output: {twos_complement_to_integer(str, 1)}")
+        print(f"input: {str} unsigned output: {unsigned_to_integer(str, 1)}")
 
 
 
